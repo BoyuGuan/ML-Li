@@ -60,7 +60,7 @@ def parse_args():
   config = {
     "data_dir": "./Dataset",
     "save_path": "model.ckpt",
-    "batch_size": 32,
+    "batch_size": 512,
     "n_workers": 8,
     "valid_steps": 2000,
     "warmup_steps": 1000,

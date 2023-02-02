@@ -77,7 +77,7 @@ def main(
   print(f"[Info]: Finish creating model!",flush = True)
 
   results = [["Id", "Category"]]
-  for feat_paths, mels in tqdm(dataloader):
+  for feat_paths, mels in dataloader:
     with torch.no_grad():
       mels = mels.to(device)
       outs = model(mels)
