@@ -1,2 +1,4 @@
 */Dataset/*
 *temp*
+*__pycache__*
+*.ckpt
