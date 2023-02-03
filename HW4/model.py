@@ -8,7 +8,7 @@ import torch.nn.functional as F
 
 
 class Classifier(nn.Module):
-  def __init__(self, d_model=80, n_spks=600, dropout=0.1):
+  def __init__(self, d_model=70, n_spks=600, dropout=0.1):
     # 这里的d_model可以理解成嵌入层的维度，类似于word2vec后的向量维度
     super().__init__()
     # Project the dimension of features from that of input into d_model. 类似于嵌入层
@@ -17,16 +17,12 @@ class Classifier(nn.Module):
     #   Change Transformer to Conformer.
     #   https://arxiv.org/abs/2005.08100
     self.encoder_layer = nn.TransformerEncoderLayer(
-      d_model=d_model, dim_feedforward=256, nhead=2
+      d_model=d_model, dim_feedforward=256, nhead=1
     )
-    # self.encoder = nn.TransformerEncoder(self.encoder_layer, num_layers=2)
+    self.encoder = nn.TransformerEncoder(self.encoder_layer, num_layers=2)
 
     # Project the the dimension of features from d_model into speaker nums.
-    self.pred_layer = nn.Sequential(
-      nn.Linear(d_model, d_model),
-      nn.ReLU(),
-      nn.Linear(d_model, n_spks),
-    )
+    self.pred_layer = nn.Linear(d_model, n_spks)
 
   def forward(self, mels):
     """
@@ -40,7 +36,7 @@ class Classifier(nn.Module):
     # out: (length, batch size, d_model)
     out = out.permute(1, 0, 2)
     # The encoder layer expect features in the shape of (length, batch size, d_model).
-    out = self.encoder_layer(out)
+    out = self.encoder(out)
     # out: (batch size, length, d_model)
     out = out.transpose(0, 1)
     # mean pooling

@@ -105,6 +105,7 @@ def main(
     try:
       batch = next(train_iterator)
     except StopIteration:
+      # 如果训练集迭代器遍历完了，重新创建一个从头开始
       train_iterator = iter(train_loader)
       batch = next(train_iterator)
 
