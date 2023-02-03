@@ -43,9 +43,15 @@
 |  Private Score  | Public Score  |
 |  ----  | ----  |
 | 0.93055  | 0.93166 |
-顺利通过medimu
+顺利通过medium
 
 ## Hard
-
-
+### pooling
+根据助教提示，我首先将pooling换成self-attention为基础的pooling，做了以下操作  
+- 将每行数据的第一个替换成固定开始tag（40个-3.6）
+- 将mean的pooling换成attention层，并只保留开始tag的输出
+#### 结果很差
+|  Private Score  | Public Score  |
+|  ----  | ----  |
+| 0.67611  | 0.68738 |
 
